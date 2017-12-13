@@ -1,19 +1,7 @@
 class Sorter {
   constructor({ element, options }) {
     this._element = element;
-
-    this._selection = document.createElement('select');
-
-    options.forEach((pair, index) => {
-      let option = document.createElement('option');
-      option.value = pair[0];
-      option.textContent = pair[1];
-      this._selection.append(option);
-    })
-
-    this._selection.onchange = (event) => {
-      page.catalogue.changeSortOrder(event.target.value);
-    };
+    this._options = options;
 
     this._render();
   }
@@ -22,8 +10,21 @@ class Sorter {
     this._element.innerHTML = `
       <p>
         Sort by:
+        <select></select>
       </p>
     `;
-    this._element.querySelector('p').append(this._selection);
+    this._selection = this._element.querySelector('select');
+
+    this._options.forEach((pair, index) => {
+      this._selection.innerHTML += `<option value="${pair[0]}">${pair[1]}</option>`
+    });
+
+    this._selection.onchange = (event) => {
+      this._handeChange(event);
+    };
+  }
+
+  _handeChange() {
+    page.catalogue.changeSortOrder(event.target.value);
   }
 }

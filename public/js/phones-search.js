@@ -2,14 +2,6 @@ class Search {
   constructor({ element }) {
     this._element = element;
 
-    this._searchBar = document.createElement('input');
-    this._searchBar.type = 'text';
-    this._searchBar.value = '';
-
-    this._searchBar.onkeyup = (event) => {
-      page.catalogue.changeQuery(event.target.value);
-    };
-
     this._render();
   }
 
@@ -17,8 +9,17 @@ class Search {
     this._element.innerHTML = `
       <p>
         Search:
+        <input type="text" value="">
       </p>
     `;
-    this._element.querySelector('p').append(this._searchBar);
+
+    this._searchBar = this._element.querySelector('input');
+    this._searchBar.onkeyup = (event) => {
+      this._handeKeyStroke(event);
+    };
+  }
+  
+  _handeKeyStroke() {
+    page.catalogue.changeQuery(event.target.value);
   }
 }
