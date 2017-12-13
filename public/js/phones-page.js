@@ -159,15 +159,20 @@ const phonesFromServer = [
 
 class PhonesPage {
   constructor({ element }) {
-    this._element = element;
+    this._element = element 
 
     new PhonesCatalogue({
       element: this._element.querySelector('[data-component="phones-catalogue"]'),
-      phones: this._getPhones()
+      phones: this._getPhones(),
+      elementPhone: this._element.querySelector('[data-component="search"]')
     });
+
+
   }
 
   _getPhones() {
     return phonesFromServer;
   }
+
+ 
 }
