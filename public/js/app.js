@@ -1,5 +1,6 @@
 'use strict';
 
-new PhonesPage({
+let page;
+page = new PhonesPage({
   element: document.querySelector('[data-component="page"]'),
 });
