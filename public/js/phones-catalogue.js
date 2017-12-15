@@ -19,7 +19,7 @@ class PhonesCatalogue {
           </a>
           <a href="#!/phones/${ phone.id }">${ phone.name }</a>
           <p>${ phone.snippet }</p>
-          <p>${ phone.age }</p>
+          <p>age: ${ phone.age }</p>
         </li>
       `;
     });
