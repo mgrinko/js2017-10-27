@@ -1,6 +1,7 @@
 'use strict';
 
-let page;
-page = new PhonesPage({
+import PhonesPage from './phones-page.js';
+
+new PhonesPage({
   element: document.querySelector('[data-component="page"]'),
 });

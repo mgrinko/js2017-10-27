@@ -1,5 +1,9 @@
 'use strict';
 
+import Search from './search.js';
+import Sorter from './sorter.js';
+import PhonesCatalogue from './phones-catalogue.js';
+
 const phonesFromServer = [
   {
     "age": 0,
@@ -155,28 +159,85 @@ const phonesFromServer = [
     "snippet": "Motorola CHARM fits easily in your pocket or palm.  Includes MOTOBLUR service."
   }
 ];
+const sortingList = {
+  "name": "Alphabetical",
+  "age": "Newest"
+};
 
-
-class PhonesPage {
-  constructor({ element }) {
-    this._element = element;
-
+export default class PhonesPage {
+  _initComponents() {
     this._search = new Search({
-      element: this._element.querySelector('[data-component="search"]')
+      element: this._element.querySelector('[data-component="search"]'),
     });
 
     this._sorter = new Sorter({
       element: this._element.querySelector('[data-component="sorter"]'),
-      options: [['age', 'Newest'], ['name', 'Alphabetical']]
+      list: sortingList,
     });
-    
-    this.catalogue = new PhonesCatalogue({
+
+    this._catalogue = new PhonesCatalogue({
       element: this._element.querySelector('[data-component="phones-catalogue"]'),
-      phones: this._getPhones()
+    });
+
+    this._catalogue.setPhones( this._getPhones() );
+  }
+
+
+  constructor({ element }) {
+    this._element = element;
+
+    this._currentQuery = '';
+    this._currentOrder = null;
+
+    this._initComponents();
+
+
+
+    this._search.on('search.change', (event) => {
+      this._currentQuery = event.detail;
+
+      let phones = this._getPhones({
+        query: this._currentQuery,
+        order: this._currentOrder,
+      });
+
+      this._catalogue.setPhones( phones );
+    });
+
+    this._sorter.on('sorter.change', (event) => {
+      this._currentOrder = event.detail;
+
+      let phones = this._getPhones({
+        query: this._currentQuery,
+        order: this._currentOrder,
+      });
+
+      this._catalogue.setPhones( phones );
     });
   }
 
-  _getPhones() {
-    return phonesFromServer;
+  _getPhones({ query = '', order = 'name' } = {}) {
+    let normalizedQuery = query.toLowerCase();
+
+    let filterPhones = phonesFromServer.filter((phone) => {
+      return phone.name.toLowerCase().includes(normalizedQuery)
+    });
+
+    switch(order) {
+      case 'age':
+        return filterPhones.sort(this._sortByAge);
+
+      case 'name':
+      default:
+        return filterPhones.sort(this._sortByName);
+    }
+  }
+
+  _sortByName(a, b) {
+    return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+  }
+
+  _sortByAge(a, b) {
+    return a.age - b.age;
   }
 }
