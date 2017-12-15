@@ -29,4 +29,22 @@ class PhonesCatalogue {
       </ul>
     `;
   }
+
+  _search(searchString) {
+
+    let searchRegExp = new RegExp(`${ searchString }`, 'i');
+
+    let phoneList = this._element.querySelectorAll('li');
+
+    for(let item of phoneList) {
+      if(!searchRegExp.test(item.textContent)) {
+        item.hidden = true;     // не срабатывает, т.к. перекрывается css-классом .thumbnail,
+                                // пришлось display: block; ставить
+        item.style.display = 'none';
+      } else {
+        item.hidden = false;
+        item.style.display = 'block';
+      }
+    }
+  }
 }

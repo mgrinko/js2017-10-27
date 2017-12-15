@@ -161,9 +161,17 @@ class PhonesPage {
   constructor({ element }) {
     this._element = element;
 
-    new PhonesCatalogue({
+    this._catalog = new PhonesCatalogue({
       element: this._element.querySelector('[data-component="phones-catalogue"]'),
       phones: this._getPhones()
+    });
+
+    new PhonesSearch({
+      element: this._element.querySelector('[data-component="search"]')
+    });
+
+    this._element.addEventListener('search', event => {
+      this._catalog._search(event.searchString);
     });
   }
 
