@@ -1,17 +1,17 @@
 'use strict';
 
 class PhonesCatalogue {
-  constructor({ element, phones }) {
+  constructor({element, phones}) {
     this._element = element;
     this._phones = phones;
 
-    this._render();
+    this._render(this._phones);
   }
 
-  _render() {
+  _render(phones = []) {
     let listHTML = '';
 
-    this._phones.forEach((phone) => {
+    phones.forEach((phone) => {
       listHTML += `
         <li class="thumbnail">
           <a href="#!/phones/${ phone.id }" class="thumb">
@@ -19,6 +19,7 @@ class PhonesCatalogue {
           </a>
           <a href="#!/phones/${ phone.id }">${ phone.name }</a>
           <p>${ phone.snippet }</p>
+          <p>age: ${ phone.age }</p>
         </li>
       `;
     });
