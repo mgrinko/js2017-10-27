@@ -165,6 +165,11 @@ class PhonesPage {
       element: this._element.querySelector('[data-component="phones-catalogue"]'),
       phones: this._getPhones()
     });
+
+    new PhonesSearch({
+      element: this._element.querySelector('[data-component="search"]'),
+      phonesList: this._element.querySelector('[data-component="phones-catalogue"]')
+    })
   }
 
   _getPhones() {
