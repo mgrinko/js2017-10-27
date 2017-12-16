@@ -1,5 +1,9 @@
 'use strict';
 
+import Search from './search.js';
+import Sorter from './sorter.js';
+import PhonesCatalogue from './phones-catalogue.js';
+
 const phonesFromServer = [
   {
     "age": 0,
@@ -155,24 +159,92 @@ const phonesFromServer = [
     "snippet": "Motorola CHARM fits easily in your pocket or palm.  Includes MOTOBLUR service."
   }
 ];
+const sortingList = {
+  "name": "Alphabetical",
+  "age": "Newest"
+};
+
+export default class PhonesPage {
+  _initComponents() {
+    this._search = new Search({
+      element: this._element.querySelector('[data-component="search"]'),
+    });
+
+    this._sorter = new Sorter({
+      element: this._element.querySelector('[data-component="sorter"]'),
+      list: sortingList,
+    });
+
+    this._catalogue = new PhonesCatalogue({
+      element: this._element.querySelector('[data-component="phones-catalogue"]'),
+    });
+
+    this._catalogue.setPhones( this._getPhones() );
+  }
 
 
-class PhonesPage {
   constructor({ element }) {
     this._element = element;
 
-    new PhonesCatalogue({
-      element: this._element.querySelector('[data-component="phones-catalogue"]'),
-      phones: this._getPhones()
+    this._currentQuery = '';
+    this._currentOrder = null;
+
+    this._initComponents();
+
+
+
+    this._search.on('search.change', (event) => {
+      this._currentQuery = event.detail;
+
+      let phones = this._getPhones({
+        query: this._currentQuery,
+        order: this._currentOrder,
+      });
+
+      this._catalogue.setPhones( phones );
     });
 
+    this._sorter.on('sorter.change', (event) => {
+      this._currentOrder = event.detail;
+
+      let phones = this._getPhones({
+        query: this._currentQuery,
+        order: this._currentOrder,
+      });
+
+      this._catalogue.setPhones( phones );
+    });
+  }
+
+  _getPhones({ query = '', order = 'name' } = {}) {
+    let normalizedQuery = query.toLowerCase();
+
+    let filterPhones = phonesFromServer.filter((phone) => {
+      return phone.name.toLowerCase().includes(normalizedQuery)
+    });
+
+<<<<<<< HEAD
     new PhonesSearch({
       element: this._element.querySelector('[data-component="search"]'),
       phonesList: this._element.querySelector('[data-component="phones-catalogue"]')
     })
+=======
+    switch(order) {
+      case 'age':
+        return filterPhones.sort(this._sortByAge);
+
+      case 'name':
+      default:
+        return filterPhones.sort(this._sortByName);
+    }
   }
 
-  _getPhones() {
-    return phonesFromServer;
+  _sortByName(a, b) {
+    return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+>>>>>>> d32eb6e1da2493421d1291f81f05c4cd7acf8d68
+  }
+
+  _sortByAge(a, b) {
+    return a.age - b.age;
   }
 }

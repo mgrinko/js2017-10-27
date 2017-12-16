@@ -6,10 +6,15 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="app.css">
 
+<<<<<<< HEAD
   <script src="js/phones-search.js"></script>
   <script src="js/phones-catalogue.js"></script>
   <script src="js/phones-page.js"></script>
   <script src="js/app.js" defer></script>
+=======
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script src="js/app.js" type="module" defer></script>
+>>>>>>> d32eb6e1da2493421d1291f81f05c4cd7acf8d68
 </head>
 <body>
 
@@ -21,6 +26,7 @@
 
       <div data-component="search"></div>
 
+<<<<<<< HEAD
       <div data-component="sorter">
         <p>
           Sort by:
@@ -30,6 +36,9 @@
           </select>
         </p>
       </div>
+=======
+      <div data-component="sorter"></div>
+>>>>>>> d32eb6e1da2493421d1291f81f05c4cd7acf8d68
 
     </div>
 
@@ -41,6 +50,27 @@
     </div>
   </div>
 </div>
+
+<script type="template" id="phones-catalogue-template">
+
+  <ul class="phones"
+      data-element="phones-list">
+
+    <% phones.forEach((phone) => { %>
+
+      <li class="thumbnail">
+        <a href="#!/phones/<%= phone.id %>" class="thumb">
+          <img alt="<%= phone.name %>" src="<%= phone.imageUrl %>">
+        </a>
+        <a href="#!/phones/<%= phone.id %>"><%= phone.name %></a>
+        <p><%= phone.snippet %></p>
+      </li>
+
+    <% }); %>
+
+  </ul>
+
+</script>
 
 </body>
 </html>

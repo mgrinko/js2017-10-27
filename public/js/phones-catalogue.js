@@ -1,32 +1,43 @@
 'use strict';
 
-class PhonesCatalogue {
+let template = document.querySelector('#phones-catalogue-template').innerHTML;
+let compiledTemplate = _.template(template);
+
+console.log(compiledTemplate);
+
+export default class PhonesCatalogue {
   constructor({ element, phones }) {
     this._element = element;
-    this._phones = phones;
 
     this._render();
+
+    this._phonesList = this._element.querySelector('[data-element="phones-list"]');
+  }
+
+  setPhones(phones) {
+    this._phones = phones;
+
+    this._renderList();
   }
 
   _render() {
-    let listHTML = '';
+    this._element.innerHTML = '';
+  }
 
-    this._phones.forEach((phone) => {
-      listHTML += `
-        <li class="thumbnail">
-          <a href="#!/phones/${ phone.id }" class="thumb">
-            <img alt="${ phone.name }" src="${ phone.imageUrl }">
-          </a>
-          <a href="#!/phones/${ phone.id }">${ phone.name }</a>
-          <p>${ phone.snippet }</p>
-        </li>
-      `;
+  _renderList() {
+    this._element.innerHTML = compiledTemplate({
+      phones: this._phones,
     });
-
-    this._element.innerHTML = `
-      <ul class="phones">
-        ${ listHTML }
-      </ul>
-    `;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
