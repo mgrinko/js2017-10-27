@@ -2,6 +2,9 @@
 
 import Component from './component.js';
 
+let template = document.querySelector('#search-template').innerHTML;
+let compiledTemplate = _.template(template);
+
 export default class Search extends Component {
   constructor({ element }) {
     super(element);
@@ -16,11 +19,6 @@ export default class Search extends Component {
   }
 
   _render() {
-    this._element.innerHTML = `
-      <p>
-          Search:
-          <input data-element="field">
-      </p>
-    `;
+    this._element.innerHTML = compiledTemplate();
   }
 }

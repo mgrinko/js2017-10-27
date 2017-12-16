@@ -53,5 +53,31 @@
 
 </script>
 
+<script type="template" id="search-template">
+
+  <p>
+    Search:
+    <input data-element="field">
+  </p>
+
+</script>
+
+<script type="template" id="sorter-template">
+
+  <p>
+    Sort by:
+    <select data-element="sorting">
+      
+      <% for (let key of Object.keys(list)) { %>
+
+        <option value="<%= key %>"><%= list[key] %></option>
+  
+      <% } %>
+
+    </select>
+  </p>
+
+</script>
+
 </body>
 </html>

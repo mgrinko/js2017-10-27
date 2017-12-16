@@ -2,6 +2,9 @@
 
 import Component from './component.js';
 
+let template = document.querySelector('#sorter-template').innerHTML;
+let compiledTemplate = _.template(template);
+
 export default class Sorter extends Component {
   constructor({ element, list: optionsList }) {
     super(element);
@@ -18,21 +21,8 @@ export default class Sorter extends Component {
   }
 
   _render() {
-    let listHTML = '';
-
-    for (let option in this._list) {
-      listHTML += `
-        <option value="${option}">${this._list[option]}</option>
-      `;
-    }
-
-    this._element.innerHTML = `
-      <p>
-        Sort by:
-        <select data-element="sorting">
-          ${listHTML}
-        </select>
-      </p>
-    `;
+    this._element.innerHTML = compiledTemplate({
+      list: this._list,
+    });
   }
 }
