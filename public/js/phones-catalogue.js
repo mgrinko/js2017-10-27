@@ -10,6 +10,8 @@ export default class PhonesCatalogue {
     this._render();
 
     this._phonesList = this._element.querySelector('[data-element="phones-list"]');
+
+    this.setPhones = this.setPhones.bind(this);
   }
 
   setPhones(phones) {

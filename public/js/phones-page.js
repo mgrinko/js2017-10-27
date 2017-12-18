@@ -24,7 +24,8 @@ export default class PhonesPage {
       element: this._element.querySelector('[data-component="phones-catalogue"]'),
     });
 
-    this._catalogue.setPhones(this._getPhones());
+    this._getPhones()
+      .then(this._catalogue.setPhones);
   }
 
 
@@ -41,55 +42,49 @@ export default class PhonesPage {
     this._search.on('search.change', (event) => {
       this._currentQuery = event.detail;
 
-      let phones = this._getPhones({
+      this._getPhones({
         query: this._currentQuery,
         order: this._currentOrder,
-      });
-
-      this._catalogue.setPhones(phones);
+      })
+        .then(this._catalogue.setPhones);
     });
 
     this._sorter.on('sorter.change', (event) => {
       this._currentOrder = event.detail;
 
-      let phones = this._getPhones({
+      this._getPhones({
         query: this._currentQuery,
         order: this._currentOrder,
-      });
-
-      this._catalogue.setPhones(phones);
+      })
+        .then(this._catalogue.setPhones);
     });
   }
 
   _getPhones({ query = '', order = 'name' } = {}) {
 
-    let result;
+    return new Promise(function(resolve, reject) {
 
-    let normalizedQuery = query.toLowerCase();
-
-    let xhr = new XMLHttpRequest();
-    
-    let url = 'phones?q=' + normalizedQuery + '&order=' + order;
-
-    xhr.open('GET', url, false);
-
-    xhr.onreadystatechange = function () {
-
-      if (xhr.readyState != 4) return;
-
-      if (xhr.status != 200) {
-        // обработать ошибку
-        alert('Ошибка ' + xhr.status + ': ' + xhr.statusText);
-        return;
-      }
-
-      // обработать результат
-      result = JSON.parse(xhr.responseText);
-    }
-
-    xhr.send();
-
-    return result;
+      let xhr = new XMLHttpRequest();
+      let params = 'q=' + query + '&order=' + order;
+      xhr.open('GET', 'phones?' + params, true);
+  
+      xhr.onload = function() {
+        if (this.status == 200) {
+          let result = JSON.parse(this.responseText);
+          resolve(result);
+        } else {
+          let error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
+      };
+  
+      xhr.onerror = function() {
+        reject(new Error("Network Error"));
+      };
+  
+      xhr.send();
+    });
   }
 
 }
