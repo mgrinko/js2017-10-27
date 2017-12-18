@@ -1,7 +1,5 @@
-'use strict';
-
-import PhonesPage from './phones-page.js';
+﻿'use strict';
 
 new PhonesPage({
-  element: document.querySelector('[data-component="page"]'),
+  element: document.getElementById('page'),
 });

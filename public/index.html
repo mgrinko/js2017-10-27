@@ -7,37 +7,39 @@
   <link rel="stylesheet" href="app.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
-  <script src="js/app.js" type="module" defer></script>
+  <script src="js/component.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/sorter.js"></script>
+  <script src="js/phones-catalogue.js"></script>
+  <script src="js/phones-page.js"></script>
+  <script src="js/app.js" defer></script>
 </head>
 <body>
 
 <div class="container-fluid">
-  <div class="row" data-component="page">
+  <div class="row" id="page">
 
     <!--Sidebar -->
     <div class="col-md-2">
 
-      <div data-component="search"></div>
+      <div id="search"></div>
 
-      <div data-component="sorter"></div>
+      <div id="sorter"></div>
 
     </div>
 
     <!-- main -->
     <div class="col-md-10">
 
-      <div data-component="phones-catalogue"></div>
+      <div id="phones-catalogue"></div>
 
     </div>
   </div>
 </div>
 
 <script type="template" id="phones-catalogue-template">
-
-  <ul class="phones"
-      data-element="phones-list">
-
-    <% phones.forEach((phone) => { %>
+  <ul class="phones" id="phones-list">
+    <% obj.forEach((phone) => { %>
 
       <li class="thumbnail">
         <a href="#!/phones/<%= phone.id %>" class="thumb">
@@ -48,7 +50,6 @@
       </li>
 
     <% }); %>
-
   </ul>
 
 </script>

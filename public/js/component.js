@@ -1,6 +1,6 @@
-'use strict';
+﻿'use strict';
 
-export default class Component {
+class Component {
   constructor(element) {
     this._element = element;
   }
