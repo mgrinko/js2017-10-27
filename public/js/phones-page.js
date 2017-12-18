@@ -1,8 +1,4 @@
-'use strict';
-
-import Search from './search.js';
-import Sorter from './sorter.js';
-import PhonesCatalogue from './phones-catalogue.js';
+﻿'use strict';
 
 const phonesFromServer = [
   {
@@ -159,24 +155,27 @@ const phonesFromServer = [
     "snippet": "Motorola CHARM fits easily in your pocket or palm.  Includes MOTOBLUR service."
   }
 ];
+
 const sortingList = {
   "name": "Alphabetical",
   "age": "Newest"
 };
 
-export default class PhonesPage {
+class PhonesPage 
+{
   _initComponents() {
+   
     this._search = new Search({
-      element: this._element.querySelector('[data-component="search"]'),
+      element: document.getElementById('search'),
     });
 
     this._sorter = new Sorter({
-      element: this._element.querySelector('[data-component="sorter"]'),
+      element: document.getElementById('sorter'),
       list: sortingList,
     });
 
     this._catalogue = new PhonesCatalogue({
-      element: this._element.querySelector('[data-component="phones-catalogue"]'),
+      element: document.getElementById('phones-catalogue'),
     });
 
     this._catalogue.setPhones( this._getPhones() );
@@ -191,8 +190,6 @@ export default class PhonesPage {
 
     this._initComponents();
 
-
-
     this._search.on('search.change', (event) => {
       this._currentQuery = event.detail;
 
@@ -200,7 +197,7 @@ export default class PhonesPage {
         query: this._currentQuery,
         order: this._currentOrder,
       });
-
+      
       this._catalogue.setPhones( phones );
     });
 
@@ -216,20 +213,24 @@ export default class PhonesPage {
     });
   }
 
-  _getPhones({ query = '', order = 'name' } = {}) {
+  _getPhones({ query = '', order = 'name' } = {}) 
+  {
     let normalizedQuery = query.toLowerCase();
 
     let filterPhones = phonesFromServer.filter((phone) => {
       return phone.name.toLowerCase().includes(normalizedQuery)
     });
 
-    switch(order) {
+    switch(order) 
+    {
       case 'age':
         return filterPhones.sort(this._sortByAge);
 
       case 'name':
       default:
-        return filterPhones.sort(this._sortByName);
+        let result = filterPhones.sort(this._sortByName);
+
+        return result;
     }
   }
 

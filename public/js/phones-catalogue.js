@@ -1,43 +1,21 @@
-'use strict';
+﻿'use strict';
 
-let template = document.querySelector('#phones-catalogue-template').innerHTML;
-let compiledTemplate = _.template(template);
-
-console.log(compiledTemplate);
-
-export default class PhonesCatalogue {
-  constructor({ element, phones }) {
+class PhonesCatalogue 
+{
+  constructor({ element }) {
     this._element = element;
+    this.template = document.getElementById('phones-catalogue-template').innerHTML;
+    this.compiledTemplate = _.template( this.template );
 
-    this._render();
+    this._element.innerHTML = '';
 
-    this._phonesList = this._element.querySelector('[data-element="phones-list"]');
+    this._phonesList = this.compiledTemplate( phonesFromServer );
   }
 
+  // set phone list
   setPhones(phones) {
     this._phones = phones;
 
-    this._renderList();
-  }
-
-  _render() {
-    this._element.innerHTML = '';
-  }
-
-  _renderList() {
-    this._element.innerHTML = compiledTemplate({
-      phones: this._phones,
-    });
+    this._element.innerHTML = this.compiledTemplate( this._phones );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

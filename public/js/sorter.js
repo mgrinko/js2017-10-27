@@ -1,8 +1,6 @@
-'use strict';
+﻿'use strict';
 
-import Component from './component.js';
-
-export default class Sorter extends Component {
+class Sorter extends Component {
   constructor({ element, list: optionsList }) {
     super(element);
 
@@ -10,7 +8,7 @@ export default class Sorter extends Component {
 
     this._render();
 
-    this._select = this._element.querySelector('[data-element="sorting"]');
+    this._select = document.getElementById('sortorder');
 
     this._select.addEventListener('change', (event) => {
       this.trigger('sorter.change', this._select.value);
@@ -29,7 +27,7 @@ export default class Sorter extends Component {
     this._element.innerHTML = `
       <p>
         Sort by:
-        <select data-element="sorting">
+        <select id="sortorder">
           ${listHTML}
         </select>
       </p>
