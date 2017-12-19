@@ -3,7 +3,7 @@
 let template = document.querySelector('#phones-catalogue-template').innerHTML;
 let compiledTemplate = _.template(template);
 
-console.log(compiledTemplate);
+//console.log(compiledTemplate);
 
 export default class PhonesCatalogue {
   constructor({ element, phones }) {
