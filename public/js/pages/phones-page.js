@@ -1,8 +1,10 @@
 'use strict';
 
-import Search from './search.js';
-import Sorter from './sorter.js';
-import PhonesCatalogue from './phones-catalogue.js';
+import Search from '../components/search.js';
+import Sorter from '../components/sorter.js';
+import PhonesCatalogue from '../components/phones-catalogue.js';
+import PhoneViewer from '../components/phone-viewer.js';
+
 
 const phonesFromServer = [
   {
@@ -180,6 +182,16 @@ export default class PhonesPage {
     });
 
     this._catalogue.setPhones( this._getPhones() );
+
+    this._catalogue.hide();
+
+    this._viewer = new PhoneViewer({
+      element: this._element.querySelector('[data-component="phone-viewer"]'),
+    });
+
+    this._viewer.setPhone({});
+
+    this._viewer.show();
   }
 
 

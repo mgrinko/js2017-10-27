@@ -3,7 +3,7 @@
 let template = document.querySelector('#sorter-template').innerHTML;
 let compiledTemplate = _.template(template);
 
-import Component from './component.js';
+import Component from '../component.js';
 
 export default class Sorter extends Component {
   constructor({ element, list: optionsList }) {

@@ -1,13 +1,15 @@
 'use strict';
 
+import Component from '../component.js';
+
 let template = document.querySelector('#phones-catalogue-template').innerHTML;
 let compiledTemplate = _.template(template);
 
 //console.log(compiledTemplate);
 
-export default class PhonesCatalogue {
+export default class PhonesCatalogue extends Component {
   constructor({ element, phones }) {
-    this._element = element;
+    super(element);
 
     this._render();
 
