@@ -183,15 +183,10 @@ export default class PhonesPage {
 
     this._catalogue.setPhones( this._getPhones() );
 
-    this._catalogue.hide();
 
     this._viewer = new PhoneViewer({
       element: this._element.querySelector('[data-component="phone-viewer"]'),
     });
-
-    this._viewer.setPhone({});
-
-    this._viewer.show();
   }
 
 
@@ -203,7 +198,14 @@ export default class PhonesPage {
 
     this._initComponents();
 
+    this._catalogue.on('phones-catalogue.phone-selected', (event) => {
+      let phoneId = event.detail;
+      let phoneFromServer = this._getPhoneById(phoneId);
 
+      this._catalogue.hide();
+      this._viewer.show();
+      this._viewer.setPhone(phoneFromServer);
+    });
 
     this._search.on('search.change', (event) => {
       this._currentQuery = event.detail;
@@ -243,6 +245,21 @@ export default class PhonesPage {
       default:
         return filterPhones.sort(this._sortByName);
     }
+  }
+
+  _getPhoneById(phoneId) {
+    return {
+      "description": "Introducing Dell\u2122 Streak 7. Share photos, videos and movies together. It\u2019s small enough to carry around, big enough to gather around. Android\u2122 2.2-based tablet with over-the-air upgrade capability for future OS releases.  A vibrant 7-inch, multitouch display with full Adobe\u00ae Flash 10.1 pre-installed.  Includes a 1.3 MP front-facing camera for face-to-face chats on popular services such as Qik or Skype.  16 GB of internal storage, plus Wi-Fi, Bluetooth and built-in GPS keeps you in touch with the world around you.  Connect on your terms. Save with 2-year contract or flexibility with prepaid pay-as-you-go plans",
+      "id": "dell-streak-7",
+      "images": [
+        "img/phones/dell-streak-7.0.jpg",
+        "img/phones/dell-streak-7.1.jpg",
+        "img/phones/dell-streak-7.2.jpg",
+        "img/phones/dell-streak-7.3.jpg",
+        "img/phones/dell-streak-7.4.jpg"
+      ],
+      "name": "Dell Streak 7",
+    };
   }
 
   _sortByName(a, b) {

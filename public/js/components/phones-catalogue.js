@@ -5,11 +5,14 @@ import Component from '../component.js';
 let template = document.querySelector('#phones-catalogue-template').innerHTML;
 let compiledTemplate = _.template(template);
 
-//console.log(compiledTemplate);
 
 export default class PhonesCatalogue extends Component {
   constructor({ element, phones }) {
     super(element);
+
+    this._element.addEventListener('click', (event) => {
+      this._onPhoneClick(event);
+    });
 
     this._render();
 
@@ -20,6 +23,19 @@ export default class PhonesCatalogue extends Component {
     this._phones = phones;
 
     this._renderList();
+  }
+
+  _onPhoneClick(event) {
+    let phoneLink = event.target.closest('[data-element="phone-link"]');
+
+    if (!phoneLink) {
+      return;
+    }
+
+    let phoneElement = phoneLink.closest('[data-element="phone"]');
+    let phoneId = phoneElement.dataset.phoneId;
+
+    this.trigger('phones-catalogue.phone-selected', phoneId);
   }
 
   _render() {
