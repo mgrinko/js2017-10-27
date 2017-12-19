@@ -1,3 +1,6 @@
+'use strict';
+
+import HttpService from './http-service.js';
 
 const phonesFromServer = [
   {
@@ -173,19 +176,11 @@ const PhoneService = {
     }
   },
 
-  get(phoneId) {
-    return {
-      "description": "Introducing Dell\u2122 Streak 7. Share photos, videos and movies together. It\u2019s small enough to carry around, big enough to gather around. Android\u2122 2.2-based tablet with over-the-air upgrade capability for future OS releases.  A vibrant 7-inch, multitouch display with full Adobe\u00ae Flash 10.1 pre-installed.  Includes a 1.3 MP front-facing camera for face-to-face chats on popular services such as Qik or Skype.  16 GB of internal storage, plus Wi-Fi, Bluetooth and built-in GPS keeps you in touch with the world around you.  Connect on your terms. Save with 2-year contract or flexibility with prepaid pay-as-you-go plans",
-      "id": "dell-streak-7",
-      "images": [
-        "img/phones/dell-streak-7.0.jpg",
-        "img/phones/dell-streak-7.1.jpg",
-        "img/phones/dell-streak-7.2.jpg",
-        "img/phones/dell-streak-7.3.jpg",
-        "img/phones/dell-streak-7.4.jpg"
-      ],
-      "name": "Dell Streak 7",
-    };
+  get(phoneId, successCallback) {
+    HttpService.get(
+      `/data/phones/${ phoneId }.json`,
+      successCallback
+    );
   },
 
   _sortByName(a, b) {

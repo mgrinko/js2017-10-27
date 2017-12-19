@@ -44,11 +44,14 @@ export default class PhonesPage {
 
     this._catalogue.on('phones-catalogue.phone-selected', (event) => {
       let phoneId = event.detail;
-      let phoneFromServer = PhoneService.get(phoneId);
 
-      this._catalogue.hide();
-      this._viewer.show();
-      this._viewer.setPhone(phoneFromServer);
+      PhoneService.get(phoneId, (phone) => {
+        console.log(phone);
+
+        this._catalogue.hide();
+        this._viewer.show();
+        this._viewer.setPhone(phone);
+      });
     });
 
     this._search.on('search.change', (event) => {
