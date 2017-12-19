@@ -1,6 +1,6 @@
 'use strict';
 
-let template = document.querySelector('#sort-template').innerHTML;
+let template = document.querySelector('#sorter-template').innerHTML;
 let compiledTemplate = _.template(template);
 
 import Component from './component.js';
