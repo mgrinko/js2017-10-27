@@ -8,7 +8,7 @@ function accept(req, res) {
   if (req.url.startsWith('/data/')) {
     setTimeout(() => {
       file.serve(req, res);
-    }, 1000);
+    }, 500);
   } else {
     req.url = '/public' + req.url;
 
