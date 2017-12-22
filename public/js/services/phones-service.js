@@ -2,25 +2,23 @@
 
 import HttpService from './http-service.js';
 
-
 const PhoneService = {
-  getAllFiltered(successCallback, { query = '', order = 'name' } = {}) {
-    HttpService.get(
-      `/data/phones/phones.json`,
+  getAllFiltered(successCallback, {query = '', order = 'name'} = {}) {
+    HttpService.get(`/data/phones/phones.json`)
+    .then(
+        (phones) => {
+          let filteredPhones = this._getFilteredPhones(phones, query);
+          let sortedPhones = this._getSortedPhones(filteredPhones, order);
 
-      (phones) => {
-        let filteredPhones = this._getFilteredPhones(phones, query);
-        let sortedPhones = this._getSortedPhones(filteredPhones, order);
-
-        successCallback(sortedPhones);
-      }
+          successCallback(sortedPhones);
+        },
     );
   },
 
   get(phoneId, successCallback) {
     HttpService.get(
-      `/data/phones/${ phoneId }.json`,
-      successCallback
+        `/data/phones/${ phoneId }.json`,
+        successCallback,
     );
   },
 
@@ -28,12 +26,12 @@ const PhoneService = {
     let normalizedQuery = query.toLowerCase();
 
     return phones.filter((phone) => {
-      return phone.name.toLowerCase().includes(normalizedQuery)
+      return phone.name.toLowerCase().includes(normalizedQuery);
     });
   },
 
   _getSortedPhones(phones, order) {
-    switch(order) {
+    switch (order) {
       case 'age':
         return phones.sort(this._sortByAge);
 
@@ -49,7 +47,7 @@ const PhoneService = {
 
   _sortByAge(a, b) {
     return a.age - b.age;
-  }
+  },
 };
 
 export default PhoneService;
