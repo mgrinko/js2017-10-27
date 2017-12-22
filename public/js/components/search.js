@@ -2,7 +2,7 @@
 
 let template = document.querySelector('#search-template').innerHTML;
 
-import Component from './component.js';
+import Component from '../component.js';
 
 export default class Search extends Component {
   constructor({ element }) {

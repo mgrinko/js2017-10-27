@@ -28,6 +28,10 @@
 
       <div data-component="phones-catalogue"></div>
 
+      <div data-component="phone-viewer"
+           class="js-hidden">
+      </div>
+
     </div>
   </div>
 </div>
@@ -39,11 +43,23 @@
 
     <% phones.forEach((phone) => { %>
 
-      <li class="thumbnail">
-        <a href="#!/phones/<%= phone.id %>" class="thumb">
+      <li class="thumbnail"
+          data-element="phone"
+          data-phone-id="<%= phone.id %>">
+
+        <a href="#!/phones/<%= phone.id %>"
+           data-element="phone-link"
+           class="thumb">
+
           <img alt="<%= phone.name %>" src="<%= phone.imageUrl %>">
         </a>
-        <a href="#!/phones/<%= phone.id %>"><%= phone.name %></a>
+
+        <a href="#!/phones/<%= phone.id %>"
+           data-element="phone-link">
+
+          <%= phone.name %>
+        </a>
+
         <p><%= phone.snippet %></p>
       </li>
 
@@ -53,7 +69,7 @@
 
 </script>
 
-<script type="template" id="sort-template">
+<script type="template" id="sorter-template">
   <p>
     Sort by:
     <select data-element="sorting">
@@ -74,6 +90,24 @@
     Search:
     <input data-element="field">
   </p>
+</script>
+
+<script type="template" id="phone-viewer-template">
+
+  <img class="phone" src="<%= phone.images[0] %>">
+
+  <h1><%- phone.name %></h1>
+
+  <p><%- phone.description %></p>
+
+  <ul class="phone-thumbs">
+    <% phone.images.forEach((image) => { %>
+      <li>
+        <img src="<%= image %>">
+      </li>
+    <% }); %>
+  </ul>
+
 </script>
 
 </body>

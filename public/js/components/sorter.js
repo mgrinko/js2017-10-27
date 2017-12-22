@@ -1,15 +1,15 @@
 'use strict';
 
-let template = document.querySelector('#sort-template').innerHTML;
+let template = document.querySelector('#sorter-template').innerHTML;
 let compiledTemplate = _.template(template);
 
-import Component from './component.js';
+import Component from '../component.js';
 
 export default class Sorter extends Component {
-  constructor({ element, list: optionsList }) {
+  constructor({ element, options }) {
     super(element);
 
-    this._list = optionsList;
+    this._options = options;
 
     this._render();
 
@@ -22,7 +22,7 @@ export default class Sorter extends Component {
 
   _render() {
     this._element.innerHTML = compiledTemplate({
-      list: this._list,
+      list: this._options,
     });
   }
 }
