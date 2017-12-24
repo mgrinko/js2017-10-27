@@ -4,24 +4,19 @@ import HttpService from './http-service.js';
 
 
 const PhoneService = {
-  getAllFiltered(successCallback, { query = '', order = 'name' } = {}) {
-    HttpService.get(
-      `/data/phones/phones.json`,
-
-      (phones) => {
+  getAllFiltered({ query = '', order = 'name' } = {}) {
+    return HttpService.get(`/data/phones/phones.json`)
+      .then(JSON.parse)
+      .then(phones => {
         let filteredPhones = this._getFilteredPhones(phones, query);
         let sortedPhones = this._getSortedPhones(filteredPhones, order);
-
-        successCallback(sortedPhones);
-      }
-    );
+        return sortedPhones;
+      }); 
   },
 
-  get(phoneId, successCallback) {
-    HttpService.get(
-      `/data/phones/${ phoneId }.json`,
-      successCallback
-    );
+  get(phoneId) {
+    return HttpService.get(`/data/phones/${ phoneId }.json`)
+      .then(JSON.parse);
   },
 
   _getFilteredPhones(phones, query) {
