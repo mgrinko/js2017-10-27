@@ -1,18 +1,32 @@
+'use strict';
+
 const HttpService = {
-  get(url, successCallback) {
-    let xhr = new XMLHttpRequest();
+    get(url) {
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
 
-    xhr.open('GET', url, true);
+            xhr.open('GET', url, true);
 
-    xhr.send();
-    console.log('request was sent');
+            xhr.send();
+            console.log('request was sent');
 
-    xhr.onload = () => {
-      let data = JSON.parse(xhr.responseText);
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    let data = JSON.parse(this.responseText);
 
-      successCallback(data);
-    };
-  }
+                    resolve(data);
+                } else {
+                    let error = new Error(this.statusText);
+                    error.code = xhr.status;
+                    reject(error);
+                }
+            };
+
+            xhr.onerror = function() {
+                reject(new Error("Network Error"));
+            };
+        });
+    }
 };
 
 export default HttpService;
