@@ -4,52 +4,57 @@ import HttpService from './http-service.js';
 
 
 const PhoneService = {
-  getAllFiltered(successCallback, { query = '', order = 'name' } = {}) {
-    HttpService.get(
-      `/data/phones/phones.json`,
+    getAllFiltered({ query = '', order = 'name' } = {}) {
+        return new Promise((resolve, reject) => {
+            HttpService.get(`/data/phones/phones.json`)
+                .then(
+                    phones => {
+                        let filteredPhones = this._getFilteredPhones(phones, query);
+                        let sortedPhones = this._getSortedPhones(filteredPhones, order);
 
-      (phones) => {
-        let filteredPhones = this._getFilteredPhones(phones, query);
-        let sortedPhones = this._getSortedPhones(filteredPhones, order);
+                        resolve(sortedPhones);
+                    },
+                    error => reject(error)
+                );
+        });
+    },
 
-        successCallback(sortedPhones);
-      }
-    );
-  },
+    get(phoneId) {
+        return new Promise((resolve, reject) => {
+            HttpService.get(`/data/phones/${ phoneId }.json`)
+                .then(
+                    phone => resolve(phone),
+                    error => reject(error)
+                );
+        });
+    },
 
-  get(phoneId, successCallback) {
-    HttpService.get(
-      `/data/phones/${ phoneId }.json`,
-      successCallback
-    );
-  },
+    _getFilteredPhones(phones, query) {
+        let normalizedQuery = query.toLowerCase();
 
-  _getFilteredPhones(phones, query) {
-    let normalizedQuery = query.toLowerCase();
+        return phones.filter((phone) => {
+            return phone.name.toLowerCase().includes(normalizedQuery)
+        });
+    },
 
-    return phones.filter((phone) => {
-      return phone.name.toLowerCase().includes(normalizedQuery)
-    });
-  },
+    _getSortedPhones(phones, order) {
+        switch(order) {
+            case 'age':
+                return phones.sort(this._sortByAge);
 
-  _getSortedPhones(phones, order) {
-    switch(order) {
-      case 'age':
-        return phones.sort(this._sortByAge);
+            case 'name':
+            default:
+                return phones.sort(this._sortByName);
+        }
+    },
 
-      case 'name':
-      default:
-        return phones.sort(this._sortByName);
+    _sortByName(a, b) {
+        return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+    },
+
+    _sortByAge(a, b) {
+        return a.age - b.age;
     }
-  },
-
-  _sortByName(a, b) {
-    return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
-  },
-
-  _sortByAge(a, b) {
-    return a.age - b.age;
-  }
 };
 
 export default PhoneService;
