@@ -4,17 +4,19 @@ import HttpService from './http-service.js';
 
 
 const PhoneService = {
-  getAllFiltered(successCallback, { query = '', order = 'name' } = {}) {
+  getAllFiltered({ query = '', order = 'name' } = {}) {
     HttpService.get(
-      `/data/phones/phones.json`,
+      `/data/phones/phones.json`
+    )
+    .then((phones) => {
+      let filteredPhones = this._getFilteredPhones(phones, query);
+      let sortedPhones = this._getSortedPhones(filteredPhones, order);
 
-      (phones) => {
-        let filteredPhones = this._getFilteredPhones(phones, query);
-        let sortedPhones = this._getSortedPhones(filteredPhones, order);
+      return new Promise((resolve, reject) => {
+        resolve(sortedPhones);
+      });
 
-        successCallback(sortedPhones);
-      }
-    );
+    });
   },
 
   get(phoneId, successCallback) {

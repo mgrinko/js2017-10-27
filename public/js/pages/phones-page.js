@@ -25,7 +25,7 @@ export default class PhonesPage {
       element: this._element.querySelector('[data-component="phones-catalogue"]'),
     });
 
-    PhoneService.getAllFiltered((phones) => {
+    PhoneService.getAllFiltered().then((phones) => {
       this._catalogue.setPhones( phones );
     });
 
