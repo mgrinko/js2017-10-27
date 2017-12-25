@@ -25,9 +25,12 @@ export default class PhonesPage {
       element: this._element.querySelector('[data-component="phones-catalogue"]'),
     });
 
-    PhoneService.getAllFiltered().then((phones) => {
-      this._catalogue.setPhones( phones );
-    });
+    PhoneService.getAllFiltered()
+    .then(
+      (phones) => {
+        this._catalogue.setPhones( phones );
+      }
+    );
 
 
     this._viewer = new PhoneViewer({
@@ -47,39 +50,50 @@ export default class PhonesPage {
     this._catalogue.on('phones-catalogue.phone-selected', (event) => {
       let phoneId = event.detail;
 
-      PhoneService.get(phoneId, (phone) => {
-        this._catalogue.hide();
-        this._viewer.show();
-        this._viewer.setPhone(phone);
-      });
+      PhoneService.get(phoneId)
+      .then(
+        (phone) => {
+          this._catalogue.hide();
+          this._viewer.show();
+          this._viewer.setPhone(phone);
+        }
+      );
+
+      ;
     });
 
     this._search.on('search.change', (event) => {
       this._currentQuery = event.detail;
 
       PhoneService.getAllFiltered(
-        (phones) => {
-          this._catalogue.setPhones( phones );
-        },
         {
           query: this._currentQuery,
           order: this._currentOrder,
         }
+      )
+      .then(
+        (phones) => {
+          this._catalogue.setPhones( phones );
+        }
       );
+
     });
 
     this._sorter.on('sorter.change', (event) => {
       this._currentOrder = event.detail;
 
       PhoneService.getAllFiltered(
-        (phones) => {
-          this._catalogue.setPhones( phones );
-        },
         {
           query: this._currentQuery,
           order: this._currentOrder,
         }
+      )
+      .then(
+        (phones) => {
+          this._catalogue.setPhones( phones );
+        }
       );
+      
     });
   }
 }

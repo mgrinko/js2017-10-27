@@ -5,25 +5,30 @@ import HttpService from './http-service.js';
 
 const PhoneService = {
   getAllFiltered({ query = '', order = 'name' } = {}) {
-    HttpService.get(
-      `/data/phones/phones.json`
-    )
-    .then((phones) => {
-      let filteredPhones = this._getFilteredPhones(phones, query);
-      let sortedPhones = this._getSortedPhones(filteredPhones, order);
 
-      return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+      HttpService.get(
+        `/data/phones/phones.json`
+      )
+      .then((phones) => {
+        let filteredPhones = this._getFilteredPhones(phones, query);
+        let sortedPhones = this._getSortedPhones(filteredPhones, order);
+
         resolve(sortedPhones);
       });
-
     });
+
   },
 
-  get(phoneId, successCallback) {
-    HttpService.get(
-      `/data/phones/${ phoneId }.json`,
-      successCallback
-    );
+  get(phoneId) {
+    return new Promise((resolve, reject) => {
+      HttpService.get(
+        `/data/phones/${ phoneId }.json`
+      )
+      .then(phone =>  resolve(phone));
+
+    });
+
   },
 
   _getFilteredPhones(phones, query) {

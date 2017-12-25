@@ -10,10 +10,21 @@ const HttpService = {
       xhr.send();
       console.log('request was sent');
 
-      xhr.onload = () => {
-        let data = JSON.parse(xhr.responseText);
-        resolve(data);
+      xhr.onload = function() {
+        if (this.status == 200) {
+          let data = JSON.parse(xhr.responseText);
+          resolve(data);
+        } else {
+          var error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
       };
+
+      xhr.onerror = function() {
+        reject(new Error("Network Error"));
+      };
+
 
     });
 
