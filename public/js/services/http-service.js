@@ -1,17 +1,22 @@
 const HttpService = {
-  get(url, successCallback) {
-    let xhr = new XMLHttpRequest();
+  get(url) {
 
-    xhr.open('GET', url, true);
+    return new Promise((resolve, reject) => {
 
-    xhr.send();
-    console.log('request was sent');
+      let xhr = new XMLHttpRequest();
 
-    xhr.onload = () => {
-      let data = JSON.parse(xhr.responseText);
+      xhr.open('GET', url, true);
 
-      successCallback(data);
-    };
+      xhr.send();
+      console.log('request was sent');
+
+      xhr.onload = () => {
+        let data = JSON.parse(xhr.responseText);
+        resolve(data);
+      };
+
+    });
+
   }
 };
 
