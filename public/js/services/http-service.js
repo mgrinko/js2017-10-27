@@ -1,17 +1,33 @@
 const HttpService = {
-  get(url, successCallback) {
-    let xhr = new XMLHttpRequest();
+  get(url) {
 
-    xhr.open('GET', url, true);
+    return new Promise((resolve, reject) => {
 
-    xhr.send();
-    console.log('request was sent');
+      let xhr = new XMLHttpRequest();
 
-    xhr.onload = () => {
-      let data = JSON.parse(xhr.responseText);
+      xhr.open('GET', url, true);
 
-      successCallback(data);
-    };
+      xhr.send();
+      console.log('request was sent');
+
+      xhr.onload = function() {
+        if (this.status == 200) {
+          let data = JSON.parse(xhr.responseText);
+          resolve(data);
+        } else {
+          var error = new Error(this.statusText);
+          error.code = this.status;
+          reject(error);
+        }
+      };
+
+      xhr.onerror = function() {
+        reject(new Error("Network Error"));
+      };
+
+
+    });
+
   }
 };
 
