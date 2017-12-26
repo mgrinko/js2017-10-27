@@ -1,21 +1,15 @@
-let http = require('http');
-var static = require('node-static');
-var file = new static.Server('.', {
-  cache: 0
+const express = require('express');
+const bodyParser = require('body-parser');
+const port = 80;
+
+const app = express();
+
+app.use(express.static(__dirname + '/public'));
+
+app.get('/', function(req, res) {
+    res.sendfile(__dirname + '/index.html');    
 });
 
-function accept(req, res) {
-  if (req.url.startsWith('/data/')) {
-    setTimeout(() => {
-      file.serve(req, res);
-    }, 2000);
-  } else {
-    req.url = '/public' + req.url;
-
-    file.serve(req, res);
-  }
-}
-
-http.createServer(accept).listen(3000);
-
-console.log('Server running on port 3000');
+app.listen(port, () => {
+  console.log('Server is listening the port: ' + port);
+});
