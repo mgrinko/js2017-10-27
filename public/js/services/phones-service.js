@@ -6,22 +6,27 @@ import HttpService from './http-service.js';
 const PhoneService = {
   getAllFiltered(successCallback, { query = '', order = 'name' } = {}) {
     HttpService.get(
-      `/data/phones/phones.json`,
-
+      `/data/phones/phones.json`
+    ).then(
       (phones) => {
         let filteredPhones = this._getFilteredPhones(phones, query);
         let sortedPhones = this._getSortedPhones(filteredPhones, order);
 
         successCallback(sortedPhones);
-      }
-    );
+      },
+      (error) => {
+        console.log(error);
+      });
   },
 
   get(phoneId, successCallback) {
     HttpService.get(
-      `/data/phones/${ phoneId }.json`,
-      successCallback
-    );
+      `/data/phones/${ phoneId }.json`
+    ).then(
+      successCallback,
+      (error) => {
+        console.log(error);
+      });
   },
 
   _getFilteredPhones(phones, query) {

@@ -13,26 +13,21 @@
 
 <div class="container-fluid">
   <div class="row" data-component="page">
-
+    
     <!--Sidebar -->
     <div class="col-md-2">
-
       <div data-component="search"></div>
-
       <div data-component="sorter"></div>
-
     </div>
 
     <!-- main -->
     <div class="col-md-10">
-
       <div data-component="phones-catalogue"></div>
-
       <div data-component="phone-viewer"
            class="js-hidden">
       </div>
-
     </div>
+
   </div>
 </div>
 
@@ -42,15 +37,13 @@
       data-element="phones-list">
 
     <% phones.forEach((phone) => { %>
-
       <li class="thumbnail"
           data-element="phone"
           data-phone-id="<%= phone.id %>">
-
+        
         <a href="#!/phones/<%= phone.id %>"
            data-element="phone-link"
            class="thumb">
-
           <img alt="<%= phone.name %>" src="<%= phone.imageUrl %>">
         </a>
 
@@ -59,10 +52,9 @@
 
           <%= phone.name %>
         </a>
-
+        
         <p><%= phone.snippet %></p>
       </li>
-
     <% }); %>
 
   </ul>
