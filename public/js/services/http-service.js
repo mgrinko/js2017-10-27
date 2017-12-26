@@ -1,20 +1,33 @@
-// const API_URL = 'http://localhost:3000';
-const API_URL = 'https://mgrinko.github.io/js2017-10-27';
+const API_URL = 'http://localhost:3000';
+// const API_URL = 'https://mgrinko.github.io/js2017-10-27';
 
 const HttpService = {
-  get(url, successCallback) {
-    let xhr = new XMLHttpRequest();
+  get(url) {
 
-    xhr.open('GET', API_URL + url, true);
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
 
-    xhr.send();
-    console.log('request was sent');
+      xhr.open('GET', API_URL + url, true);
 
-    xhr.onload = () => {
-      let data = JSON.parse(xhr.responseText);
+      xhr.send();
 
-      successCallback(data);
-    };
+      xhr.onload = () => {
+
+        if (xhr.status !== 200) {
+          reject(`Error ${xhr.status} ${xhr.statusText}`);
+
+          return;
+        }
+
+        let data = JSON.parse(xhr.responseText);
+
+        resolve(data);
+      };
+
+
+    });
+
+
   }
 };
 
