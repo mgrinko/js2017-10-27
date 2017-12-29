@@ -6,6 +6,7 @@ import PhonesCatalogue from '../components/phones-catalogue.js';
 import PhoneViewer from '../components/phone-viewer.js';
 import PhoneService from '../services/phones-service.js';
 
+wqerqwer();
 
 export default class PhonesPage {
   _initComponents() {
