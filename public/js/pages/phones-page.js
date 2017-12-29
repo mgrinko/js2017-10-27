@@ -50,7 +50,7 @@ export default class PhonesPage {
 
     this._initComponents();
 
-    this._catalogue.on('phones-catalogue.phone-selected', (event) => {
+    this._catalogue.on('phones-catalogue.phone-selected', async (event) => {
       let phoneId = event.detail;
 
       let loadPhonePromise = PhoneService.get(phoneId);
@@ -61,21 +61,10 @@ export default class PhonesPage {
         });
       });
 
+      await rightClickPromise;
+      let phone = await loadPhonePromise;
 
-      rightClickPromise
-        .then(() => {
-          return loadPhonePromise;
-        })
-        // ... wating for loadPhonePromise
-        .then((phone) => {
-          this._showSelectedPhone(phone);
-        });
-
-      loadPhonePromise.then((phone) => {
-        console.log(phone);
-      });
-
-
+      this._showSelectedPhone(phone);
     });
 
     this._search.on('search.change', (event) => {
