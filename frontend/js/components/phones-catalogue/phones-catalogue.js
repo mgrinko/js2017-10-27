@@ -1,5 +1,6 @@
 'use strict';
 
+import style from './phones-catalogue.css';
 import compiledTemplate from './phones-catalogue.hbs';
 import Component from '../../component.js';
 

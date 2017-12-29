@@ -6,7 +6,6 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     filename: 'build.js'
   },
-  watch: true,
   devtool: 'source-map',
 
   module: {
@@ -20,6 +19,13 @@ module.exports = {
         loader: "handlebars-loader"
       },
       {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
         test: /\.js$/,
         exclude: /(node_modules)/,
         use: {
@@ -30,5 +36,11 @@ module.exports = {
         }
       }
     ]
+  },
+
+  devServer: {
+    contentBase: path.join(__dirname, "public"),
+    compress: true,
+    port: 9000
   }
 };
