@@ -1,12 +1,10 @@
 'use strict';
 
-import Search from '../components/search.js';
-import Sorter from '../components/sorter.js';
-import PhonesCatalogue from '../components/phones-catalogue.js';
-import PhoneViewer from '../components/phone-viewer.js';
+import Search from '../components/search/search.js';
+import Sorter from '../components/sorter/sorter.js';
+import PhonesCatalogue from '../components/phones-catalogue/phones-catalogue.js';
+import PhoneViewer from '../components/phone-viewer/phone-viewer.js';
 import PhoneService from '../services/phones-service.js';
-
-wqerqwer();
 
 export default class PhonesPage {
   _initComponents() {

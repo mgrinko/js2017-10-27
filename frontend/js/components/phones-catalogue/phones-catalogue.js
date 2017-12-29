@@ -1,9 +1,7 @@
 'use strict';
 
-import Component from '../component.js';
-
-let template = document.querySelector('#phones-catalogue-template').innerHTML;
-let compiledTemplate = _.template(template);
+import compiledTemplate from './phones-catalogue.hbs';
+import Component from '../../component.js';
 
 
 export default class PhonesCatalogue extends Component {

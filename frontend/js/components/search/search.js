@@ -1,8 +1,7 @@
 'use strict';
 
-let template = document.querySelector('#search-template').innerHTML;
-
-import Component from '../component.js';
+import template from './search.html';
+import Component from '../../component.js';
 
 export default class Search extends Component {
   constructor({ element }) {

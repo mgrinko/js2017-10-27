@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="app.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
   <script src="build.js" defer></script>
 </head>
 <body>
@@ -36,79 +35,6 @@
   </div>
 </div>
 
-<script type="template" id="phones-catalogue-template">
-
-  <ul class="phones"
-      data-element="phones-list">
-
-    <% phones.forEach((phone) => { %>
-
-      <li class="thumbnail"
-          data-element="phone"
-          data-phone-id="<%= phone.id %>">
-
-        <a href="#!/phones/<%= phone.id %>"
-           data-element="phone-link"
-           class="thumb">
-
-          <img alt="<%= phone.name %>" src="<%= phone.imageUrl %>">
-        </a>
-
-        <a href="#!/phones/<%= phone.id %>"
-           data-element="phone-link">
-
-          <%= phone.name %>
-        </a>
-
-        <p><%= phone.snippet %></p>
-      </li>
-
-    <% }); %>
-
-  </ul>
-
-</script>
-
-<script type="template" id="sorter-template">
-  <p>
-    Sort by:
-    <select data-element="sorting">
-
-    <%  for (let option in list) { %>
-
-      <option value="<%= option %>"><%= list[option] %></option>
-
-    <% } %>
-
-    </select>
-  </p>
-
-</script>
-
-<script type="template" id="search-template">
-  <p>
-    Search:
-    <input data-element="field">
-  </p>
-</script>
-
-<script type="template" id="phone-viewer-template">
-
-  <img class="phone" src="<%= phone.images[0] %>">
-
-  <h1><%- phone.name %></h1>
-
-  <p><%- phone.description %></p>
-
-  <ul class="phone-thumbs">
-    <% phone.images.forEach((image) => { %>
-      <li>
-        <img src="<%= image %>">
-      </li>
-    <% }); %>
-  </ul>
-
-</script>
 
 </body>
 </html>

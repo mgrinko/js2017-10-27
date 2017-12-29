@@ -1,9 +1,7 @@
 'use strict';
 
-import Component from '../component.js';
-
-let template = document.querySelector('#phone-viewer-template').innerHTML;
-let compiledTemplate = _.template(template);
+import Component from '../../component.js';
+import compiledTemplate from './phone-viewer.hbs';
 
 export default class PhoneViewer extends Component {
   constructor({ element }) {

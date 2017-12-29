@@ -1,9 +1,7 @@
 'use strict';
 
-let template = document.querySelector('#sorter-template').innerHTML;
-let compiledTemplate = _.template(template);
-
-import Component from '../component.js';
+import compiledTemplate from './sorter.hbs';
+import Component from '../../component.js';
 
 export default class Sorter extends Component {
   constructor({ element, options }) {
