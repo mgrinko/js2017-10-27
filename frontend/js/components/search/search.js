@@ -1,6 +1,7 @@
 'use strict';
 
-import Component from './component.js';
+import template from './search.html';
+import Component from '../../component.js';
 
 export default class Search extends Component {
   constructor({ element }) {
@@ -16,11 +17,6 @@ export default class Search extends Component {
   }
 
   _render() {
-    this._element.innerHTML = `
-      <p>
-          Search:
-          <input data-element="field">
-      </p>
-    `;
+    this._element.innerHTML = template;
   }
 }
